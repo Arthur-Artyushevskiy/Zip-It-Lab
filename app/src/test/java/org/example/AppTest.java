@@ -5,10 +5,53 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+
+
+    @Test
+    void testZipEqualLength() {
+        List<Integer> list1 = List.of(1, 3, 5);
+        List<Integer> list2 = List.of(2, 4, 6);
+        List<Integer> expected = List.of(1, 2, 3, 4, 5, 6);
+
+        assertEquals(expected, App.zip(list1, list2), "Should alternate elements correctly for equal length lists.");
+    }
+
+    @Test
+    void testZipFirstListLonger() {
+        List<Integer> list1 = List.of(1, 3, 5, 7, 9);
+        List<Integer> list2 = List.of(2, 4);
+        List<Integer> expected = List.of(1, 2, 3, 4, 5, 7, 9);
+
+        assertEquals(expected, App.zip(list1, list2), "Should add remaining elements from the first list.");
+    }
+
+    @Test
+    void testZipSecondListLonger() {
+        List<String> list1 = List.of("Red", "Blue");
+        List<String> list2 = List.of("White", "Black", "Green");
+        List<String> expected = List.of("Red", "White", "Blue", "Black", "Green");
+
+        assertEquals(expected, App.zip(list1, list2), "Should add remaining elements from the second list.");
+    }
+
+    @Test
+    void testZipOneEmptyList() {
+        List<Integer> list1 = List.of(1, 2, 3);
+        List<Integer> list2 = List.of();
+        List<Integer> expected = List.of(1, 2, 3);
+
+        assertEquals(expected, App.zip(list1, list2), "Should return the non-empty list if one is empty.");
+    }
+
+    @Test
+    void testZipBothEmpty() {
+        List<Object> list1 = List.of();
+        List<Object> list2 = List.of();
+        List<Object> expected = List.of();
+
+        assertEquals(expected, App.zip(list1, list2), "Zipping two empty lists should result in an empty list.");
     }
 }
